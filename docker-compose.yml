@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    ports:
+      - "4321:1113"
+
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:1113/health"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
+  pact-verify:
+    build:
+      context: .
+      dockerfile: ./DockerfileTest
+    depends_on:
+      app:
+        condition: service_healthy
+    environment:
+      - PROVIDER_BASE_URL=app:1113
+      - PACT_BROKER_BASE_URL=https://danrusu.pactflow.io
+      - PACT_BROKER_TOKEN=ycelGxxLy8GugjClVWarCQ
+      - PACT_BROKER_PUBLISH_VERIFICATION_RESULTS=true
+    entrypoint:
+      - curl
+      - --fail
+      - app:1113/health
