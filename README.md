@@ -32,6 +32,6 @@ yarn start
   yarn run pact:verify
   ```
 
-## 4. [API documentation](https://app.swaggerhub.com/apis-docs/DRUSUEXTERN/pact-provider-poc/1.0.0)
+## 4. [API documentation](https://app.swaggerhub.com/apis-docs/DANGINKGO_1/pact-provider-poc/1.0.0)
 
 - [Open API specification](./api-docs.yaml)
