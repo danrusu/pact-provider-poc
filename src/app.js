@@ -11,7 +11,7 @@ app.use(cors({ origin: process.env.FRONTEND_URL || 'http://localhost:1112' }));
 app
   .get('/health', healthCheck)
   .get('/products', getProducts)
-  .get('/product/:productId', getProduct);
+  .get('/products/:productId', getProduct);
 
 const port = process.env.PORT || 1113;
 app.listen(port, () => console.log(`Server listening on port: ${port}`));

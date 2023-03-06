@@ -1,0 +1,38 @@
+  openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: pact-provider-poc
+  description: Sample API for contract testing POC
+  
+servers:
+  - url: https://pact-provider-poc.herokuapp.com/
+  
+paths: 
+
+  /health:
+    get:
+      summary: Healthcheck
+      responses:
+        '200':
+          description: OK   
+
+  /products:
+    get:
+      summary: Returns all products
+      responses:
+        '200':
+          description: OK          
+
+  /products/{productId}:
+    get:
+      summary: Returns a product by ID
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: The ID of the product to return
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
