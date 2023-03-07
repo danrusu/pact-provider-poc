@@ -1,4 +1,4 @@
-  openapi: 3.0.0
+openapi: 3.0.0
 info:
   version: 1.0.0
   title: pact-provider-poc
@@ -21,7 +21,14 @@ paths:
       summary: Returns all products
       responses:
         '200':
-          description: OK          
+          description: OK   
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                   $ref: '#/components/schemas/ProductDTO'
+          
 
   /products/{productId}:
     get:
@@ -36,3 +43,53 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/ProductDTO'
+              example: |-
+                {
+                  "id": 100,
+                  "name": iphone 11,
+                  "price": 600,
+                  "currency": "EUR",
+                  "used": false,
+                  "stock": 99,
+                  "shop": {
+                    "name": "Emag",
+                    "location": "Timisoara"
+                  }
+                }
+                
+components:
+  schemas:
+    ProductDTO:
+      required:
+      - id
+      - name
+      - price
+      - currency
+      - used
+      - stock
+      - shop
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+        currency:
+          type: string
+        used:
+          type: boolean
+        stock:
+          type: integer
+        shop:
+          type: object
+          properties:
+            name:
+              type: string
+            location:
+              type: string
