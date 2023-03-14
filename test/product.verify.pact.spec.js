@@ -19,7 +19,7 @@ describe('Pact Verification', () => {
       providerBaseUrl:
         process.env['PROVIDER_BASE_URL'] || 'http://localhost:1113',
       provider: 'pact-provider-poc',
-      providerVersion: process.env['PROVIDER_VERSION'] || gitHash,
+      providerVersion: '1.0.0',
       branch: gitBranch,
 
       // match existing contract by tags or consumer version

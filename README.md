@@ -35,3 +35,22 @@ yarn start
 ## 4. [API documentation](https://app.swaggerhub.com/apis-docs/DANGINKGO_1/pact-provider-poc/1.0.0)
 
 - [Open API specification](./api-docs.yaml)
+
+## 5. Publish OpenApi provider contract (bidirectional contract testing)
+
+```powershell
+docker run --rm `
+  -w /opt/pact `
+  -v ${PWD}:/opt/pact `
+  -e PACT_BROKER_BASE_URL  `
+  -e PACT_BROKER_TOKEN `
+  pactfoundation/pact-cli:latest pactflow publish-provider-contract api-docs.yaml `
+  --provider "pact-provider-poc" `
+  --provider-app-version 1.0.0 `
+  --branch master `
+  --content-type application/yaml
+  # to also verify contract uncomment next lines
+  #--verifier postman `
+  #--verification-results postman-verification-summary.json `
+  #--verification-results-content-type text/plain
+```

@@ -1,28 +1,57 @@
-  openapi: 3.0.0
+openapi: 3.0.0
 info:
   version: 1.0.0
   title: pact-provider-poc
   description: Sample API for contract testing POC
-  
 servers:
+  - url: https://virtserver.swaggerhub.com/qatools/pact-provider-poc/1.0.0
   - url: https://pact-provider-poc.herokuapp.com/
-  
-paths: 
-
+paths:
   /health:
     get:
       summary: Healthcheck
       responses:
         '200':
-          description: OK   
-
+          description: OK
   /products:
     get:
       summary: Returns all products
       responses:
         '200':
-          description: OK          
-
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+              example: |-
+                [
+                  {
+                    "id": 100,
+                    "name": "iphone 11",
+                    "price": 600,
+                    "currency": "EUR",
+                    "used": false,
+                    "stock": 99,
+                    "shop": {
+                      "name": "Emag",
+                      "location": "Timisoara"
+                    }
+                  },
+                  {
+                    "id": 101,
+                    "name": "samsung s20",
+                    "price": 300,
+                    "currency": "EUR",
+                    "used": true,
+                    "stock": 3,
+                    "shop": {
+                      "name": "Altex",
+                      "location": "Bucuresti"
+                    }
+                  }
+                ]
   /products/{productId}:
     get:
       summary: Returns a product by ID
@@ -36,3 +65,58 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+              example: |-
+                {
+                  "id": 100,
+                  "name": iphone 11,
+                  "price": 600,
+                  "currency": "EUR",
+                  "used": false,
+                  "stock": 99,
+                  "shop": {
+                    "name": "Emag",
+                    "location": "Timisoara"
+                  }
+                }
+components:
+  schemas:
+    Product:
+      required:
+        - id
+        - name
+        - price
+        - currency
+        - used
+        - stock
+        - shop
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        price:
+          type: integer
+        currency:
+          type: string
+        used:
+          type: boolean
+        stock:
+          type: integer
+        shop:
+          $ref: '#/components/schemas/Shop'
+    Shop:
+      required:
+        - name
+        - location
+      type: object
+      properties:
+        name:
+          type: string
+        location:
+          type: string
