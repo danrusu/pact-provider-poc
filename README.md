@@ -54,3 +54,5 @@ docker run --rm `
   #--verification-results postman-verification-summary.json `
   #--verification-results-content-type text/plain
 ```
+
+## 6. [Docker Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
