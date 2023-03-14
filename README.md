@@ -1,4 +1,4 @@
-# Contract testing POC - Producer
+# Contract testing POC - Producer - [Heroku App](https://pact-provider-poc.herokuapp.com/)
 
 ## 1. Setup
 
@@ -32,7 +32,7 @@ yarn start
   yarn run pact:verify
   ```
 
-## 4. [API documentation](https://app.swaggerhub.com/apis-docs/DANGINKGO_1/pact-provider-poc/1.0.0)
+## 4. [API documentation](https://app.swaggerhub.com/apis-docs/qatools/pact-provider-poc/1.0.0)
 
 - [Open API specification](./api-docs.yaml)
 
