@@ -36,7 +36,7 @@ yarn start
 
 - [Open API specification](./api-docs.yaml)
 
-## 5. Publish OpenApi provider contract (bidirectional contract testing)
+## 5. [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
 
 ```powershell
 docker run --rm `
