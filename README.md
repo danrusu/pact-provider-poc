@@ -3,13 +3,13 @@
 ## 1. Setup
 
 ```bash
-yarn install
+pnpm install
 ```
 
 ## 2. Start Producer
 
 ```bash
-yarn start
+pnpm start
 ```
 
 ## 3. Run contract tests using PactFlow.io broker
@@ -29,7 +29,7 @@ yarn start
 - verify published contract from pactflow.io against provider (start producer first)
 
   ```bash
-  yarn run pact:verify
+  pnpm pact:verify
   ```
 
 ## 4. [API documentation](https://app.swaggerhub.com/apis-docs/qatools/pact-provider-poc/1.0.0)

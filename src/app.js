@@ -16,8 +16,8 @@ app
 const port = process.env.PORT || 1113;
 app.listen(port, () => console.log(`Server listening on port: ${port}`));
 
-function healthCheck(req, res) {
-  res
-    .status(200)
-    .send(`Server running on: ${req.protocol}://${req.get('Host')}`);
+function healthCheck(_req, res) {
+  res.status(200).send({
+    healthy: true,
+  });
 }

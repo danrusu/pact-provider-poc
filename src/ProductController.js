@@ -5,7 +5,7 @@ function getProducts(_req, res) {
     res.send(products);
   } catch (e) {
     console.log(e);
-    res.status(500).send('Failed to get products');
+    res.status(500).send({ error: 'Failed to get products' });
   }
 }
 
@@ -18,7 +18,7 @@ function getProduct(req, res) {
     //product.id = '' + productId; // to break pact - wrong type
     res.send(product);
   } catch (e) {
-    res.status(500).send(`Failed to get product ${productId}`);
+    res.status(500).send({ error: `Failed to get product ${productId}` });
   }
 }
 
