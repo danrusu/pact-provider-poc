@@ -51,6 +51,7 @@ docker run --rm `
   --content-type application/yaml
   # to also verify contract uncomment next lines
   #--verifier postman `
+  #--verification-exit-code=0
   #--verification-results postman-verification-summary.json `
   #--verification-results-content-type text/plain
 ```

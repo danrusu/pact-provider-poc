@@ -12,9 +12,7 @@ describe('Pact Verification', () => {
       pactBrokerUrl: process.env.PACT_BROKER_BASE_URL,
       pactBrokerToken: process.env.PACT_BROKER_TOKEN,
 
-      publishVerificationResult: Boolean(
-        process.env.CI || process.env.PACT_PUBLISH_VERIFICATION_RESULTS,
-      ),
+      publishVerificationResult: true,
 
       providerBaseUrl:
         process.env['PROVIDER_BASE_URL'] || 'http://localhost:1113',
