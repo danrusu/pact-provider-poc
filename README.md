@@ -19,11 +19,6 @@ pnpm start
   ```bash
   export PACT_BROKER_BASE_URL=https://domain.pactflow.io
   export PACT_BROKER_TOKEN=******
-  export PACT_PUBLISH_VERIFICATION_RESULTS=true
-  export PACT_PRODUCER_TAGS="v2"
-  export PACT_CONSUMER_TAGS="test"
-  # optional
-  export PACT_PRODUCER_MOCK_PORT="1234"
   ```
 
 - verify published contract from pactflow.io against provider (start producer first)
@@ -36,7 +31,7 @@ pnpm start
 
 - [Open API specification](./api-docs.yaml)
 
-## 5. [Docker Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
+## 5. [Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
 
 - [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
 
