@@ -1,4 +1,4 @@
-# Contract testing POC - Producer - [Heroku App](https://pact-provider-poc.herokuapp.com/)
+# Contract testing POC - Producer
 
 ## 1. Setup
 
@@ -36,7 +36,9 @@ pnpm start
 
 - [Open API specification](./api-docs.yaml)
 
-## 5. [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
+## 6. [Docker Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
+
+- [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
 
 ```powershell
 docker run --rm `
@@ -56,4 +58,30 @@ docker run --rm `
   #--verification-results-content-type text/plain
 ```
 
-## 6. [Docker Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
+- Can I deploy
+
+```powershell
+docker run --rm `
+  -w /opt/pact `
+  -v ${PWD}:/opt/pact `
+  -e PACT_BROKER_BASE_URL `
+  -e PACT_BROKER_TOKEN `
+  pactfoundation/pact-cli:latest pact-broker can-i-deploy `
+  --pacticipant pact-producer-poc `
+  --version 1.0.0 `
+  --to-environment test
+```
+
+- Record deployment/release
+
+```powershell
+docker run --rm `
+  -w /opt/pact `
+  -v ${PWD}:/opt/pact `
+  -e PACT_BROKER_BASE_URL `
+  -e PACT_BROKER_TOKEN `
+  pactfoundation/pact-cli:latest pact-broker record-deployment `
+  --pacticipant pact-provider-poc `
+  --version 1.0.0 `
+  --environment test
+```
