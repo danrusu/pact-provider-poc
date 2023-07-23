@@ -36,7 +36,7 @@ pnpm start
 
 - [Open API specification](./api-docs.yaml)
 
-## 6. [Docker Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
+## 5. [Docker Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
 
 - [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
 
