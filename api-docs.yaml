@@ -16,7 +16,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/Health'
               example: |-
                 {
                   "healthy": true
@@ -93,6 +93,14 @@ paths:
                 }
 components:
   schemas:
+    Health:
+      required:
+        - healthy
+      type: object
+      additionalProperties: true
+      properties:
+        healthy:
+          type: boolean
     Product:
       required:
         - id
