@@ -2,13 +2,13 @@
 
 ## 1. Setup
 
-```bash
+```powershell
 pnpm install
 ```
 
 ## 2. Start Producer
 
-```bash
+```powershell
 pnpm start
 ```
 
@@ -16,14 +16,15 @@ pnpm start
 
 - setup environment vars
 
-  ```bash
+  ```powershell
   export PACT_BROKER_BASE_URL=https://domain.pactflow.io
   export PACT_BROKER_TOKEN=******
   ```
 
-- verify published contract from pactflow.io against provider (start producer first)
+- verify published contract from pactflow.io against provider (start provider first)
 
-  ```bash
+  ```powershell
+  pnpm start
   pnpm pact:verify
   ```
 
@@ -32,6 +33,22 @@ pnpm start
 - [Open API specification](./api-docs.yaml)
 
 ## 5. [Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
+
+- Verify Pact and publish results to Pactflow (consumer driven contract testing)
+
+```powershell
+docker run `
+  --rm `
+  -w /opt/pact `
+  -v ${PWD}:/opt/pact `
+  -e PACT_BROKER_BASE_URL `
+  -e PACT_BROKER_TOKEN `
+  pactfoundation/pact-cli:latest verify `
+  --provider pact-provider-poc `
+  --provider-base-url http://host.docker.internal:1113 `
+  --provider-app-version 1.0.0 `
+  --publish-verification-results
+```
 
 - [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
 
