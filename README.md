@@ -1,4 +1,4 @@
-# Contract testing POC - Producer
+# Contract testing POC - Provider
 
 ## 1. Setup
 
@@ -6,7 +6,7 @@
 pnpm install
 ```
 
-## 2. Start Producer
+## 2. Start Provider
 
 ```powershell
 pnpm start
@@ -79,7 +79,7 @@ docker run --rm `
   -e PACT_BROKER_BASE_URL `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest pact-broker can-i-deploy `
-  --pacticipant pact-producer-poc `
+  --pacticipant pact-provider-poc `
   --version 1.0.0 `
   --to-environment test
 ```
