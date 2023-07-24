@@ -1,5 +1,7 @@
 # Contract testing POC - Provider
 
+- related repository - [pact-consumer-poc](https://github.com/danrusu/pact-consumer-poc)
+
 ## 1. Setup
 
 ```powershell
