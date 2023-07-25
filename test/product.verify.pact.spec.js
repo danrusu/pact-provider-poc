@@ -21,6 +21,7 @@ describe('Pact Verification', () => {
       branch: gitBranch,
 
       // match existing contract by tags or consumer version
+      // https://docs.pact.io/pact_broker/advanced_topics/consumer_version_selectors
       consumerVersionSelectors: [
         {
           // (recommended) - Returns the pacts for consumers that configured mainBranch property
