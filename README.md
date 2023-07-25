@@ -41,6 +41,7 @@ pnpm start
 
 ```powershell
 $hash=git rev-parse --short head
+$branch=git rev-parse --abbrev-ref head
 docker run `
   --rm `
   -w /opt/pact `
@@ -48,13 +49,14 @@ docker run `
   -e PACT_BROKER_BASE_URL `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest verify `
-  --consumer-version-selector '{\"mainBranch\": true, \"deployedOrReleased\": true}'`
   --provider "pact-provider-poc" `
+  --provider-version-branch $branch `
   --provider-app-version $hash `
   --provider-base-url http://host.docker.internal:1113 `
-  --publish-verification-results `
+  --consumer-version-selector '{\"matchingBranch\": true }' `
   --enable-pending `
-  --fail-if-no-pacts-found
+  --fail-if-no-pacts-found `
+  --publish-verification-results
 ```
 
 - [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
@@ -83,6 +85,7 @@ docker run --rm `
 
 ```powershell
 $hash=git rev-parse --short head
+$branch=git rev-parse --abbrev-ref head
 docker run --rm `
   -w /opt/pact `
   -v ${PWD}:/opt/pact `
@@ -91,7 +94,7 @@ docker run --rm `
   pactfoundation/pact-cli:latest pact-broker can-i-deploy `
   --pacticipant pact-provider-poc `
   --version $hash `
-  --to-environment test
+  --to-environment preprod
 ```
 
 - Record deployment/release
