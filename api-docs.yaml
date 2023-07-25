@@ -19,7 +19,7 @@ paths:
                 $ref: '#/components/schemas/Health'
               example: |-
                 {
-                  "healthy": true
+                  "health": true
                 }
 
   /products:

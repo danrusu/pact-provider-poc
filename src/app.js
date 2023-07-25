@@ -18,6 +18,6 @@ app.listen(port, () => console.log(`Server listening on port: ${port}`));
 
 function healthCheck(_req, res) {
   res.status(200).send({
-    healthy: true,
+    health: true,
   });
 }
