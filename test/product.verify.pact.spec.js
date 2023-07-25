@@ -17,7 +17,7 @@ describe('Pact Verification', () => {
       providerBaseUrl:
         process.env['PROVIDER_BASE_URL'] || 'http://localhost:1113',
       provider: 'pact-provider-poc',
-      providerVersion: '1.0.0',
+      providerVersion: gitHash,
       branch: gitBranch,
 
       // match existing contract by tags or consumer version
@@ -32,6 +32,11 @@ describe('Pact Verification', () => {
           // that are currently deployed or released and currently supported in any environment.
           deployedOrReleased: true,
         },
+        /*
+        {
+          matchingBranch: true,
+        },
+        */
       ],
 
       logLevel: 'INFO',
