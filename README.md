@@ -39,10 +39,8 @@ pnpm start
 - Verify Pact and publish results to Pactflow (consumer driven contract testing)
 
 ```powershell
-
 $hash=git rev-parse --short head
 $branch=git rev-parse --abbrev-ref head
-
 docker run `
   --rm `
   -w /opt/pact `
@@ -61,7 +59,6 @@ docker run `
 ```powershell
 $hash=git rev-parse --short head
 $branch=git rev-parse --abbrev-ref head
-
 docker run --rm `
   -w /opt/pact `
   -v ${PWD}:/opt/pact `
@@ -83,7 +80,6 @@ docker run --rm `
 
 ```powershell
 $hash=git rev-parse --short head
-
 docker run --rm `
   -w /opt/pact `
   -v ${PWD}:/opt/pact `
@@ -99,7 +95,6 @@ docker run --rm `
 
 ```powershell
 $hash=git rev-parse --short head
-
 docker run --rm `
   -w /opt/pact `
   -v ${PWD}:/opt/pact `
