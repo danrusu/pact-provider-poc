@@ -39,6 +39,10 @@ pnpm start
 - Verify Pact and publish results to Pactflow (consumer driven contract testing)
 
 ```powershell
+
+$hash=git rev-parse --short head
+$branch=git rev-parse --abbrev-ref head
+
 docker run `
   --rm `
   -w /opt/pact `
@@ -48,13 +52,16 @@ docker run `
   pactfoundation/pact-cli:latest verify `
   --provider pact-provider-poc `
   --provider-base-url http://host.docker.internal:1113 `
-  --provider-app-version 1.0.0 `
+  --provider-app-version $hash `
   --publish-verification-results
 ```
 
 - [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
 
 ```powershell
+$hash=git rev-parse --short head
+$branch=git rev-parse --abbrev-ref head
+
 docker run --rm `
   -w /opt/pact `
   -v ${PWD}:/opt/pact `
@@ -62,8 +69,8 @@ docker run --rm `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest pactflow publish-provider-contract api-docs.yaml `
   --provider "pact-provider-poc" `
-  --provider-app-version 1.0.0 `
-  --branch master `
+  --provider-app-version $hash `
+  --branch $branch `
   --content-type application/yaml
   # to also verify contract uncomment next lines
   #--verifier postman `
@@ -75,6 +82,8 @@ docker run --rm `
 - Can I deploy
 
 ```powershell
+$hash=git rev-parse --short head
+
 docker run --rm `
   -w /opt/pact `
   -v ${PWD}:/opt/pact `
@@ -82,13 +91,15 @@ docker run --rm `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest pact-broker can-i-deploy `
   --pacticipant pact-provider-poc `
-  --version 1.0.0 `
+  --version $hash `
   --to-environment test
 ```
 
 - Record deployment/release
 
 ```powershell
+$hash=git rev-parse --short head
+
 docker run --rm `
   -w /opt/pact `
   -v ${PWD}:/opt/pact `
@@ -96,6 +107,6 @@ docker run --rm `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest pact-broker record-deployment `
   --pacticipant pact-provider-poc `
-  --version 1.0.0 `
+  --version $hash `
   --environment test
 ```
