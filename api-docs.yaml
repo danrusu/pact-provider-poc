@@ -95,11 +95,11 @@ components:
   schemas:
     Health:
       required:
-        - healthy
+        - health
       type: object
       additionalProperties: true
       properties:
-        healthy:
+        health:
           type: boolean
     Product:
       required:
