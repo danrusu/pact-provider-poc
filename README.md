@@ -37,10 +37,10 @@ pnpm start
 ## 5. [Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
 
 - Verify Pact and publish results to Pactflow (consumer driven contract testing)
+  - **[<em style="color:red">Consumer version selectors</span>](https://docs.pact.io/pact_broker/advanced_topics/consumer_version_selectors)**</em>
 
 ```powershell
 $hash=git rev-parse --short head
-$branch=git rev-parse --abbrev-ref head
 docker run `
   --rm `
   -w /opt/pact `
@@ -48,10 +48,13 @@ docker run `
   -e PACT_BROKER_BASE_URL `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest verify `
-  --provider pact-provider-poc `
-  --provider-base-url http://host.docker.internal:1113 `
+  --consumer-version-selector '{\"mainBranch\": true, \"deployedOrReleased\": true}'`
+  --provider "pact-provider-poc" `
   --provider-app-version $hash `
-  --publish-verification-results
+  --provider-base-url http://host.docker.internal:1113 `
+  --publish-verification-results `
+  --enable-pending `
+  --fail-if-no-pacts-found
 ```
 
 - [Publish OpenApi provider contract](https://docs.pactflow.io/docs/bi-directional-contract-testing/contracts/oas/) (bidirectional contract testing)
