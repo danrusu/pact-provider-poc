@@ -37,7 +37,7 @@ pnpm start
 ## 5. [Pact CLI](https://hub.docker.com/r/pactfoundation/pact-cli)
 
 - Verify Pact and publish results to Pactflow (consumer driven contract testing)
-  - **[<em style="color:red">Consumer version selectors</span>](https://docs.pact.io/pact_broker/advanced_topics/consumer_version_selectors)**</em>
+  - **[Consumer version selectors](https://docs.pact.io/pact_broker/advanced_topics/consumer_version_selectors)**</em>
 
 ```powershell
 $hash=git rev-parse --short head
