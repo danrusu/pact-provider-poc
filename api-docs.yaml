@@ -95,7 +95,7 @@ components:
   schemas:
     Health:
       type: object
-      additionalProperties: true
+      additionalProperties: false
       required:
         - healthy
       properties:
@@ -103,7 +103,7 @@ components:
           type: boolean
     Product:
       type: object
-      additionalProperties: true
+      additionalProperties: false
       required:
         - id
         - name
@@ -129,6 +129,7 @@ components:
           $ref: '#/components/schemas/Shop'
     Shop:
       type: object
+      additionalProperties: false
       required:
         - name
         - location
