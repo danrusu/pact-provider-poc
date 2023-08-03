@@ -24,6 +24,9 @@ describe('Pact Verification', () => {
       // https://docs.pact.io/pact_broker/advanced_topics/consumer_version_selectors
       consumerVersionSelectors: [
         {
+          matchingBranch: true,
+        },
+        {
           // (recommended) - Returns the pacts for consumers that configured mainBranch property
           mainBranch: true,
         },
@@ -32,11 +35,6 @@ describe('Pact Verification', () => {
           // that are currently deployed or released and currently supported in any environment.
           deployedOrReleased: true,
         },
-        /*
-        {
-          matchingBranch: true,
-        },
-        */
       ],
 
       logLevel: 'INFO',

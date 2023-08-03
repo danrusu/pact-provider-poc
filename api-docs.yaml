@@ -94,14 +94,16 @@ paths:
 components:
   schemas:
     Health:
+      type: object
+      additionalProperties: false
       required:
         - health
-      type: object
-      additionalProperties: true
       properties:
         health:
           type: boolean
     Product:
+      type: object
+      additionalProperties: false
       required:
         - id
         - name
@@ -110,8 +112,6 @@ components:
         - used
         - stock
         - shop
-      type: object
-      additionalProperties: true
       properties:
         id:
           type: integer
@@ -128,10 +128,11 @@ components:
         shop:
           $ref: '#/components/schemas/Shop'
     Shop:
+      type: object
+      additionalProperties: false
       required:
         - name
         - location
-      type: object
       properties:
         name:
           type: string
