@@ -61,7 +61,7 @@ jobs:
             --provider ${{env.PACT_PROVIDER}} \
             --provider-version-branch ${{env.BRANCH}} \
             --provider-app-version ${{env.SHORT_SHA}} \
-            --provider-base-url http://host.docker.internal:1113 \
+            --provider-base-url http://172.17.0.1:1113 \
             --consumer-version-selector '{"matchingBranch": true}' \
             --consumer-version-selector '{"mainBranch": true}' \
             --enable-pending \
