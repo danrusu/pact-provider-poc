@@ -82,7 +82,7 @@ jobs:
             -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
             pactfoundation/pact-cli:latest pact-broker can-i-deploy \
             --pacticipant ${{env.PACT_PROVIDER}} \
-            --version ${{env.SHORT_SHA}}
+            --version ${{env.SHORT_SHA}} \
             --to-environment ${{env.DEPLOY_ENV}}
 
   deploy:
@@ -110,7 +110,7 @@ jobs:
           docker run \
           -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
           -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
-          pactfoundation/pact-cli:latest record-deployment \
+          pactfoundation/pact-cli:latest pact-broker record-deployment \
           --pacticipant ${{env.PACT_PROVIDER}} \
-          --version ${{env.SHORT_SHA}}
+          --version ${{env.SHORT_SHA}} \
           --to-environment ${{env.DEPLOY_ENV}}
