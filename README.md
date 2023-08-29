@@ -42,10 +42,7 @@ pnpm start
 ```powershell
 $hash=git rev-parse --short head
 $branch=git rev-parse --abbrev-ref head
-docker run `
-  --rm `
-  -w /opt/pact `
-  -v ${PWD}:/opt/pact `
+docker run --rm `
   -e PACT_BROKER_BASE_URL `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest verify `
@@ -87,8 +84,6 @@ docker run --rm `
 $hash=git rev-parse --short head
 $branch=git rev-parse --abbrev-ref head
 docker run --rm `
-  -w /opt/pact `
-  -v ${PWD}:/opt/pact `
   -e PACT_BROKER_BASE_URL `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest pact-broker can-i-deploy `
@@ -102,8 +97,6 @@ docker run --rm `
 ```powershell
 $hash=git rev-parse --short head
 docker run --rm `
-  -w /opt/pact `
-  -v ${PWD}:/opt/pact `
   -e PACT_BROKER_BASE_URL `
   -e PACT_BROKER_TOKEN `
   pactfoundation/pact-cli:latest pact-broker record-deployment `
