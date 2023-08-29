@@ -55,23 +55,22 @@ jobs:
       - name: Verify consumer contract
         run: |
           docker run \
-            -w /opt/pact \
-            -v ${PWD}/pact/pacts:/opt/pact \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
             -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
-            pactfoundation/pact-cli:latest publish . \
-            --consumer-app-version ${{env.SHORT_SHA}} \
-            --branch ${{env.BRANCH}}
-
-  e2e-tests:
-    name: E2E tests (fake)
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Successfull e2e tests"
+            pactfoundation/pact-cli:latest verify \
+            --provider ${{env.PACT_PROVIDER}} \
+            --provider-version-branch ${{env.BRANCH}} \
+            --provider-app-version ${{env.SHORT_SHA}} \
+            --provider-base-url http://host.docker.internal:1113 \
+            --consumer-version-selector '{\"matchingBranch\": true}' \
+            --consumer-version-selector '{\"mainBranch\": true}' \
+            --enable-pending \
+            --fail-if-no-pacts-found \
+            --publish-verification-results
 
   can-i-deploy:
     name: Can I deploy
-    needs: contract-tests
+    needs: verify-consumer-contract
     runs-on: ubuntu-latest
     steps:
       - name: Save short sha to ENV
@@ -82,7 +81,7 @@ jobs:
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
             -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
             pactfoundation/pact-cli:latest pact-broker can-i-deploy \
-            --pacticipant ${{env.PACT_CONSUMER}} \
+            --pacticipant ${{env.PACT_PROVIDER}} \
             --version ${{env.SHORT_SHA}}
             --to-environment ${{env.DEPLOY_ENV}}
 
@@ -90,15 +89,13 @@ jobs:
     name: Deploy (fake)
     needs:
       - unit-tests
-      - contract-tests
-      - e2e-tests
       - can-i-deploy
     runs-on: ubuntu-latest
     steps:
       - name: Save short sha to ENV
         run: |
           echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
-      - run: echo "Deploy ${{env.PACT_CONSUMER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment"
+      - run: echo "Deploy ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment"
 
   record-deployment:
     name: Record Deployment
@@ -108,12 +105,12 @@ jobs:
       - name: Save short sha to ENV
         run: |
           echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
-      - name: Record deployment of ${{env.PACT_CONSUMER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment
+      - name: Record deployment of ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment
         run: |
           docker run \
           -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
           -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
           pactfoundation/pact-cli:latest record-deployment \
-          --pacticipant ${{env.PACT_CONSUMER}} \
+          --pacticipant ${{env.PACT_PROVIDER}} \
           --version ${{env.SHORT_SHA}}
           --to-environment ${{env.DEPLOY_ENV}}
