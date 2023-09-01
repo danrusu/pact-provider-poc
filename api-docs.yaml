@@ -7,21 +7,6 @@ servers:
   - url: https://virtserver.swaggerhub.com/qatools/pact-provider-poc/1.0.0
   - url: https://pact-provider-poc.herokuapp.com/
 paths:
-  /health:
-    get:
-      summary: Healthcheck
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Health'
-              example: |-
-                {
-                  "healthy": true
-                }
-
   /products:
     get:
       summary: Returns all products
@@ -93,14 +78,6 @@ paths:
                 }
 components:
   schemas:
-    Health:
-      type: object
-      additionalProperties: false
-      required:
-        - healthy
-      properties:
-        healthy:
-          type: boolean
     Product:
       type: object
       additionalProperties: false
