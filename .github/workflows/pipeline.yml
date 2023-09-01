@@ -77,6 +77,7 @@ jobs:
       - name: Save short sha to ENV
         run: |
           echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
+
       - run: |
           docker run \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
@@ -96,7 +97,18 @@ jobs:
       - name: Save short sha to ENV
         run: |
           echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
-      - run: echo "Deploy ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment"
+
+      - name: Save branch name to ENV
+        run: |
+          echo ::set-env name=BRANCH::$(echo $GIT_REF | rev | cut -d'/' -f 1 | rev)
+
+      - name: Deploy master to 'preprod'
+        run: echo "Deploy ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to 'preprod' environment"
+        if: env.BRANCH == 'master'
+
+      - name: Deploy ${{ env.BRANCH}} to 'test'
+        run: echo "Deploy ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to 'test' environment"
+        if: env.BRANCH != 'master'
 
   record-deployment:
     name: Record Deployment
@@ -106,6 +118,19 @@ jobs:
       - name: Save short sha to ENV
         run: |
           echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
+
+      - name: Save branch name to ENV
+        run: |
+          echo ::set-env name=BRANCH::$(echo $GIT_REF | rev | cut -d'/' -f 1 | rev)
+
+      - name: Set DEPLOY_ENV for master
+        run: echo ::set-env DEPLOY_ENV=preprod
+        if: env.BRANCH == 'master'
+
+      - name: Set DEPLOY_ENV for ${{env.BRANCH}}
+        run: echo ::set-env DEPLOY_ENV=test
+        if: env.BRANCH != 'master'
+
       - name: Record deployment of ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment
         run: |
           docker run \
