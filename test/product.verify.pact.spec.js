@@ -30,13 +30,11 @@ describe('Pact Verification', () => {
           // (recommended) - Returns the pacts for consumers that configured mainBranch property
           mainBranch: true,
         },
-        /*
         {
           // (recommended) - Returns the pacts for all versions of the consumer
           // that are currently deployed or released and currently supported in any environment.
           deployedOrReleased: true,
         },
-        */
       ],
 
       logLevel: 'INFO',

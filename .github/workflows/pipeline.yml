@@ -62,8 +62,9 @@ jobs:
             --provider-version-branch ${{env.BRANCH}} \
             --provider-app-version ${{env.SHORT_SHA}} \
             --provider-base-url http://172.17.0.1:1113 \
-            --consumer-version-selector '{"matchingBranch": true}' \
+            --consumer-version-selector '{"deployedOrReleased": true}' \            
             --consumer-version-selector '{"mainBranch": true}' \
+            --consumer-version-selector '{"matchingBranch": true}' \
             --enable-pending \
             --fail-if-no-pacts-found \
             --publish-verification-results
