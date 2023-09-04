@@ -50,7 +50,9 @@ docker run --rm `
   --provider-version-branch $branch `
   --provider-app-version $hash `
   --provider-base-url http://host.docker.internal:1113 `
-  --consumer-version-selector '{\"matchingBranch\": true, \"mainBranch\": true}' `
+  --consumer-version-selector '{\"deployedOrReleased\": true}' `
+  --consumer-version-selector '{\"mainBranch\": true}' `
+  --consumer-version-selector '{\"matchingBranch\": true}' `
   --enable-pending `
   --fail-if-no-pacts-found `
   --publish-verification-results

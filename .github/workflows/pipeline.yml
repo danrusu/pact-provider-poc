@@ -1,7 +1,17 @@
 name: provider-pipeline
 
 on:
-  #   workflow_dispatch:
+  workflow_dispatch:
+    inputs:
+      consumer-branch:
+        description: Consumer branch for contract verification
+        required: true
+        type: string
+      branch:
+        description: Branch
+        required: true
+        type: string
+        default: master
   pull_request:
     branches:
       - master
@@ -52,7 +62,7 @@ jobs:
         run: |
           echo ::set-env name=BRANCH::$(echo $GIT_REF | rev | cut -d'/' -f 1 | rev)
 
-      - name: Verify consumer contract
+      - name: Verify consumer contract for PRs
         run: |
           docker run \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
@@ -62,11 +72,29 @@ jobs:
             --provider-version-branch ${{env.BRANCH}} \
             --provider-app-version ${{env.SHORT_SHA}} \
             --provider-base-url http://172.17.0.1:1113 \
-            --consumer-version-selector '{"matchingBranch": true}' \
+            --consumer-version-selector '{"deployedOrReleased": true}' \            
             --consumer-version-selector '{"mainBranch": true}' \
+            --consumer-version-selector '{"matchingBranch": true}' \
             --enable-pending \
             --fail-if-no-pacts-found \
             --publish-verification-results
+        if: ${{ github.event_name == 'pull_request' }}
+
+      - name: Verify consumer contract
+        run: |
+          docker run \
+            -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
+            -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
+            pactfoundation/pact-cli:latest verify \
+            --provider ${{ env.PACT_PROVIDER }} \
+            --provider-version-branch ${{ github.event.inputs.branch }} \
+            --provider-app-version ${{ env.SHORT_SHA }} \
+            --provider-base-url http://172.17.0.1:1113 \
+            --consumer-version-selector '{"branch": "${{ github.event.inputs.consumer-branch }}"}' \
+            --enable-pending \
+            --fail-if-no-pacts-found \
+            --publish-verification-results
+        if: ${{ github.event_name == 'workflow_dispatch' }}
 
   can-i-deploy:
     name: Can I deploy
