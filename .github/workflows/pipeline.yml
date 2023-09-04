@@ -62,7 +62,7 @@ jobs:
         run: |
           echo ::set-env name=BRANCH::$(echo $GIT_REF | rev | cut -d'/' -f 1 | rev)
 
-      - name: Verify consumer contract
+      - name: Verify consumer contract for PRs
         run: |
           docker run \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
