@@ -106,3 +106,5 @@ docker run --rm `
   --version $hash `
   --environment test
 ```
+
+## 6. [Development flows](./FLOWS.md)
