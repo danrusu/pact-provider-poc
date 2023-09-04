@@ -3,8 +3,8 @@ name: provider-pipeline
 on:
   workflow_dispatch:
     inputs:
-      consumer-version:
-        description: Consumer version for contract verification
+      consumer-branch:
+        description: Consumer branch for contract verification
         required: true
         type: string
       branch:
@@ -78,6 +78,23 @@ jobs:
             --enable-pending \
             --fail-if-no-pacts-found \
             --publish-verification-results
+        if: ${{ github.event_name == 'pull_request' }}
+
+      - name: Verify consumer contract
+        run: |
+          docker run \
+            -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
+            -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
+            pactfoundation/pact-cli:latest verify \
+            --provider ${{ env.PACT_PROVIDER }} \
+            --provider-version-branch ${{ github.event.inputs.branch }} \
+            --provider-app-version ${{ env.SHORT_SHA }} \
+            --provider-base-url http://172.17.0.1:1113 \
+            --consumer-version-selector '{"branch": "${{ github.event.inputs.consumer-branch }}"}' \
+            --enable-pending \
+            --fail-if-no-pacts-found \
+            --publish-verification-results
+        if: ${{ github.event_name == 'workflow_dispatch' }}
 
   can-i-deploy:
     name: Can I deploy
