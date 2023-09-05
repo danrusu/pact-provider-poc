@@ -68,9 +68,7 @@
 
   - publishes verification results to **Pactflow**
 
-  - **can-i-deploy** to **test** fails there are breaking changes in the contract
-
-  - **record undeployment** of the previous consumer version from test
+  - **record undeployment** of the previous consumer version from test (because the provider branch has breking changes in the contract) - this requires manual triggering of the pipeline with a flag for record undeployment
 
   - **can-i-deploy** to **test** succeeds
 
