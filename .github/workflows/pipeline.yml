@@ -117,7 +117,7 @@ jobs:
       - name: Save short sha to ENV
         run: |
           echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
-      - name: Record deployment of ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment
+      - name: Record undeployment of consumer to '${{env.DEPLOY_ENV}}' environment
         run: |
           docker run \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
