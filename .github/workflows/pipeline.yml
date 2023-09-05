@@ -120,6 +120,7 @@ jobs:
             --environment ${{env.DEPLOY_ENV}}
 
   can-i-deploy:
+    if: always()
     name: Can I deploy
     needs: [verify-consumer-contract, record-consumer-undeployment]
     runs-on: ubuntu-latest
