@@ -158,6 +158,7 @@ jobs:
       - run: echo "Deploy ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment"
 
   record-deployment:
+    if: ${{ always() && contains(join(needs.deploy.result, ','), 'success') }}
     name: Record Deployment
     needs: deploy
     runs-on: ubuntu-latest
