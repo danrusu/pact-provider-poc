@@ -146,6 +146,7 @@ jobs:
             --to-environment ${{env.DEPLOY_ENV}}
 
   deploy:
+    if: ${{ always() && contains(join(needs.can-i-deploy.result, ','), 'success') }}
     name: Deploy (fake)
     needs:
       - unit-tests
