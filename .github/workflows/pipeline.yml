@@ -118,7 +118,7 @@ jobs:
       - name: Save short sha to ENV
         run: |
           echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
-      - name: Record undeployment of consumer to '${{env.DEPLOY_ENV}}' environment
+      - name: Record undeployment of consumer from '${{env.DEPLOY_ENV}}' environment
         run: |
           docker run \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
@@ -146,7 +146,6 @@ jobs:
             --to-environment ${{env.DEPLOY_ENV}}
 
   deploy:
-    if: ${{ always() && contains(join(needs.can-i-deploy.result, ','), 'success') }}
     name: Deploy (fake)
     needs:
       - unit-tests
