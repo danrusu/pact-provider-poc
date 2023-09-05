@@ -1,6 +1,6 @@
 ## Deployment flows for Consumer and Provider to reach the **test** environment
 
-### 1. Consumner feature that does not change the consumer-provider contract
+### 1. Consumer feature that does not change the consumer-provider contract
 
 - **precondition** - a contract between consumer master branch and provider master branch is published and verified, and provider master is deployed to **test** environment
 
@@ -16,7 +16,7 @@
 
 - **record deployment** of consumer branch to **test**
 
-### 2. Consumner feature that requires changes in provider that do not break the contract
+### 2. Consumer feature that requires changes in provider that do not break the contract
 
 - **precondition** - a contract between consumer master branch and provider master branch is published and verified, and provider master is deployed to **test** environment
 
@@ -26,7 +26,7 @@
 
 - **can-i-deploy** to **test** will fail since there is no verification of the contract yet
 
-- provider creates **a feature branch with the same name** as the consumer branch that needs it and crates a PR from it
+- provider creates **a feature branch with the same name** as the consumer branch that needs it and creates a PR from it
 
 - **provider pipeline**
 
@@ -46,7 +46,7 @@
 
 - **record deployment** of consumer branch to **test**
 
-### 3. Consumner feature that requires changes in provider that break the contract
+### 3. Consumer feature that requires changes in provider that break the contract
 
 - **precondition** - a contract between consumer master branch and provider master branch is published and verified, and provider master is deployed to **test** environment
 
@@ -55,3 +55,29 @@
 - the **consumer pipeline** runs the contrat tests and publish the generated contract to **Pactflow**
 
 - **can-i-deploy** to **test** will fail since there is no verification of the contract yet
+
+- provider creates **a feature branch with the same name** as the consumer branch that needs it and creates a PR from it
+
+- **provider pipeline**
+
+  - verifies the PactFlow contracts
+
+    - deployed or realeased consumers
+    - consumer master branch
+    - consumer feature branch with the same name
+
+  - publishes verification results to **Pactflow**
+
+  - **can-i-deploy** to **test** fails there are breaking changes in the contract
+
+  - **record undeployment** of the previous consumer version from test
+
+  - **can-i-deploy** to **test** succeeds
+
+  - **record deployment** of provider branch to **test**
+
+- run again **can-i-deploy** to **test** for consumer (contract is now verified and the producer branch with the same name is deployed to **test**)
+
+- **deploy** consumer branch to **test**
+
+- **record deployment** of consumer branch to **test**
