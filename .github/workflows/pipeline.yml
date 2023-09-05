@@ -12,6 +12,11 @@ on:
         required: true
         type: string
         default: master
+      record-consumer-undeployment:
+        description: Record consumer undeployment for API breaking changes
+        required: true
+        type: boolean
+        default: false
   pull_request:
     branches:
       - master
@@ -63,6 +68,7 @@ jobs:
           echo ::set-env name=BRANCH::$(echo $GIT_REF | rev | cut -d'/' -f 1 | rev)
 
       - name: Verify consumer contract for PRs
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           docker run \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
@@ -78,9 +84,9 @@ jobs:
             --enable-pending \
             --fail-if-no-pacts-found \
             --publish-verification-results
-        if: ${{ github.event_name == 'pull_request' }}
 
       - name: Verify consumer contract
+        if: ${{ github.event_name == 'workflow_dispatch' }}
         run: |
           docker run \
             -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
@@ -94,7 +100,24 @@ jobs:
             --enable-pending \
             --fail-if-no-pacts-found \
             --publish-verification-results
-        if: ${{ github.event_name == 'workflow_dispatch' }}
+
+  record-consumer-undeployment:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.record-consumer-undeployment }}
+    name: Record consumer undeployment for API breaking changes
+    needs: verify-consumer-contract
+    runs-on: ubuntu-latest
+    steps:
+      - name: Save short sha to ENV
+        run: |
+          echo ::set-env name=SHORT_SHA::$(echo ${GIT_COMMIT:0:7})
+      - name: Record deployment of ${{env.PACT_PROVIDER}} with version ${{env.SHORT_SHA}} to '${{env.DEPLOY_ENV}}' environment
+        run: |
+          docker run \
+            -e PACT_BROKER_BASE_URL=${{env.PACT_BROKER_BASE_URL}} \
+            -e PACT_BROKER_TOKEN=${{env.PACT_BROKER_TOKEN}} \
+            pactfoundation/pact-cli:latest pact-broker record-undeployment \
+            --pacticipant ${{env.PACT_CONSUMER}} \
+            --environment ${{env.DEPLOY_ENV}}
 
   can-i-deploy:
     name: Can I deploy
