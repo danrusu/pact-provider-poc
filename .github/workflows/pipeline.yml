@@ -47,7 +47,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        if: ${{ github.event_name == 'pull_request' }}
         uses: actions/checkout@v3
+
+      - name: Checkout
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
       - uses: actions/setup-node@v3
         with:
