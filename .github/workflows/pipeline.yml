@@ -121,7 +121,7 @@ jobs:
 
   can-i-deploy:
     name: Can I deploy
-    needs: verify-consumer-contract
+    needs: [verify-consumer-contract, record-consumer-undeployment]
     runs-on: ubuntu-latest
     steps:
       - name: Save short sha to ENV
