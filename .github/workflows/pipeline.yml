@@ -110,6 +110,7 @@ jobs:
 
   record-consumer-undeployment:
     if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.record-consumer-undeployment }}
+    continue-on-error: true
     name: Record consumer undeployment for API breaking changes
     needs: verify-consumer-contract
     runs-on: ubuntu-latest
