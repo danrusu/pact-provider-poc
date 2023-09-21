@@ -1,6 +1,6 @@
 ## Deployment flows for Consumer and Provider to reach the **test** environment
 
-### 1. Consumer feature that does not change the consumer-provider contract
+### 1. Consumer feature that _does not change the consumer-provider contract_
 
 - **precondition** - a contract between consumer master branch and provider master branch is published and verified, and provider master is deployed to **test** environment
 
@@ -16,7 +16,7 @@
 
 - **record deployment** of consumer branch to **test**
 
-### 2. Consumer feature that requires changes in provider that do not break the contract
+### 2. Consumer feature that requires changes in provider that _do not break the contract_
 
 - **precondition** - a contract between consumer master branch and provider master branch is published and verified, and provider master is deployed to **test** environment
 
@@ -46,7 +46,7 @@
 
 - **record deployment** of consumer branch to **test**
 
-### 3. Consumer feature that requires changes in provider that break the contract
+### 3. Consumer feature that requires changes in provider that _break the contract_
 
 - **precondition** - a contract between consumer master branch and provider master branch is published and verified, and provider master is deployed to **test** environment
 
